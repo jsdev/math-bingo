@@ -29,6 +29,32 @@ const symbols = {
   MULTIPLICATION: '×',
   DIVISION: '÷'
 }
+const equations = {
+  ADDITION: () => {
+    a = Math.floor(Math.random() * 10) + 1;
+    b = Math.floor(Math.random() * 10) + 1;
+    result = a + b;
+    return [a, b, result];
+  },
+  SUBTRACTION: () => {
+    a = Math.floor(Math.random() * 20) + 1;
+    b = Math.floor(Math.random() * a) + 1;
+    result = a - b;
+    return [a, b, result];
+  },
+  MULTIPLICATION: () => {
+    a = Math.floor(Math.random() * 7) + 1;
+    b = Math.floor(Math.random() * 7) + 1;
+    result = a * b;
+    return [a, b, result];
+  },
+  DIVISION: () => {
+    b = Math.floor(Math.random() * 10) + 1;
+    result = Math.floor(Math.random() * 10) + 1;
+    a = b * result;
+    return [a, b, result];
+  }
+};
 
 const generateEquation = (operation, usedNumbers, remainingColumns) => {
   let a, b, result, column;
@@ -40,28 +66,7 @@ const generateEquation = (operation, usedNumbers, remainingColumns) => {
     column = remainingColumns[Math.floor(Math.random() * remainingColumns.length)];
     remainingColumns = remainingColumns.filter(col => col !== column);
 
-    switch (operation) {
-      case 'ADDITION':
-        a = Math.floor(Math.random() * 10) + 1;
-        b = Math.floor(Math.random() * 10) + 1;
-        result = a + b;
-        break;
-      case 'SUBTRACTION':
-        a = Math.floor(Math.random() * 20) + 1;
-        b = Math.floor(Math.random() * a) + 1;
-        result = a - b;
-        break;
-      case 'MULTIPLICATION':
-        a = Math.floor(Math.random() * 7) + 1;
-        b = Math.floor(Math.random() * 7) + 1;
-        result = a * b;
-        break;
-      case 'DIVISION':
-        b = Math.floor(Math.random() * 10) + 1;
-        result = Math.floor(Math.random() * 10) + 1;
-        a = b * result;
-        break;
-    }
+    let [a,b,result] = equations[operation];
   } while (usedNumbers[column].has(result));
 
   usedNumbers[column].add(result);
